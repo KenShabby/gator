@@ -8,5 +8,5 @@ func main() {
 	// Set the current user to "brendan" and update the config file on disk.
 	// Read the config file again and print the contents of the config struct
 	// to the terminal.
-
+	// Adding another comment to test merging branches.
 }
