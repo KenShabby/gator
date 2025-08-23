@@ -16,7 +16,7 @@ func (cfg Config) Read() (Config, error) {
 	if err != nil {
 		return Config{}, errors.New("could not open user's home directory")
 	}
-	gatorConfigLoc := homeDir + ".gatorconfig.json"
+	gatorConfigLoc := homeDir + "/.gatorconfig.json"
 
 	gatorConfig := Config{DBUrl: gatorConfigLoc}
 
