@@ -40,6 +40,8 @@ func main() {
 	cliCommands.register("login", handlerLogin)
 	cliCommands.register("register", handlerRegister)
 	cliCommands.register("reset", handlerReset)
+	cliCommands.register("users", handlerGetUsers)
+	cliCommands.register("agg", handlerAgg)
 
 	if len(os.Args) < 2 {
 		log.Fatalf("too few command line arguments")
