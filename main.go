@@ -5,10 +5,10 @@ import (
 	"log"
 	"os"
 
+	_ "github.com/lib/pq"
+
 	"gator/internal/config"
 	"gator/internal/database"
-
-	_ "github.com/lib/pq"
 )
 
 type state struct {
@@ -40,6 +40,8 @@ func main() {
 	cmds.register("login", handlerLogin)
 	cmds.register("register", handlerRegister)
 	cmds.register("reset", handlerReset)
+	cmds.register("users", handlerListUsers)
+	cmds.register("agg", handlerAgg)
 
 	if len(os.Args) < 2 {
 		log.Fatal("Usage: cli <command> [args...]")
@@ -52,5 +54,4 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-
 }
