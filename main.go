@@ -6,6 +6,7 @@ import (
 	"os"
 
 	_ "github.com/lib/pq"
+	"github.com/pressly/goose"
 
 	"gator/internal/config"
 	"gator/internal/database"
@@ -34,6 +35,10 @@ func main() {
 		cfg: &cfg,
 	}
 
+	if err := runMigrations(db); err != nil {
+		log.Fatalf("error running migrations: %v", err)
+	}
+
 	cmds := commands{
 		registeredCommands: make(map[string]func(*state, command) error),
 	}
@@ -43,6 +48,7 @@ func main() {
 	cmds.register("users", handlerListUsers)
 	cmds.register("agg", handlerAgg)
 	cmds.register("addfeed", handlerAddFeed)
+	cmds.register("feeds", handlerListFeeds)
 
 	if len(os.Args) < 2 {
 		log.Fatal("Usage: cli <command> [args...]")
@@ -55,4 +61,16 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+}
+
+func runMigrations(db *sql.DB) error {
+	if err := goose.SetDialect("postgres"); err != nil {
+		return err
+	}
+
+	if err := goose.Up(db, "sql/schema"); err != nil {
+		return err
+	}
+
+	return nil
 }
