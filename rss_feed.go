@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"encoding/xml"
+	"fmt"
 	"html"
 	"io"
 	"net/http"
@@ -26,7 +27,10 @@ type RSSItem struct {
 }
 
 func fetchFeed(ctx context.Context, feedURL string) (*RSSFeed, error) {
-	httpClient := http.Client{Timeout: 10 * time.Second}
+	httpClient := http.Client{
+		Timeout: 10 * time.Second,
+	}
+
 	req, err := http.NewRequestWithContext(ctx, "GET", feedURL, nil)
 	if err != nil {
 		return nil, err
@@ -40,13 +44,20 @@ func fetchFeed(ctx context.Context, feedURL string) (*RSSFeed, error) {
 	}
 	defer resp.Body.Close()
 
-	data, err := io.ReadAll(resp.Body)
+	dat, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return nil, err
 	}
 
+	if resp.StatusCode != http.StatusOK {
+		return nil, fmt.Errorf("unexpected status code: %d", resp.StatusCode)
+	}
+
+	fmt.Println("Final URL:", resp.Request.URL.String())
+	fmt.Println("Status Code:", resp.StatusCode)
+
 	var rssFeed RSSFeed
-	err = xml.Unmarshal(data, &rssFeed)
+	err = xml.Unmarshal(dat, &rssFeed)
 	if err != nil {
 		return nil, err
 	}
