@@ -8,10 +8,9 @@ import (
 	"strings"
 	"time"
 
-
+	"github.com/google/uuid"
 
 	"gator/internal/database"
-	"github.com/google/uuid"
 )
 
 func handlerAgg(s *state, cmd command) error {
@@ -86,3 +85,4 @@ func scrapeFeed(db *database.Queries, feed database.Feed) {
 		}
 	}
 	log.Printf("Feed %s collected, %v posts found", feed.Name, len(feedData.Channel.Item))
+}
