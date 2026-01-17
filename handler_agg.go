@@ -10,7 +10,7 @@ import (
 
 	"github.com/google/uuid"
 
-	"gator/internal/database"
+	"github.com/KenShabby/gator/internal/database"
 )
 
 func handlerAgg(s *state, cmd command) error {

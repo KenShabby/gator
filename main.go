@@ -9,8 +9,8 @@ import (
 	_ "github.com/lib/pq"
 	"github.com/pressly/goose"
 
-	"gator/internal/config"
-	"gator/internal/database"
+	"github.com/KenShabby/gator/internal/config"
+	"github.com/KenShabby/gator/internal/database"
 )
 
 type state struct {

@@ -7,7 +7,7 @@ import (
 
 	"github.com/google/uuid"
 
-	"gator/internal/database"
+	"github.com/KenShabby/gator/internal/database"
 )
 
 func handlerFollow(s *state, cmd command, user database.User) error {
